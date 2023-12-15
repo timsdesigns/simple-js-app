@@ -5,7 +5,7 @@
 }
 /* elements */
 ul {
-  padding-left: inherit+2px; /* add small indent */
+  padding-left: 2rem; /* add small indent */
 }
 li {
   list-style:upper-roman; /* add some variety */
@@ -14,5 +14,5 @@ li {
 /* classes */
 .pokemonList {
   padding-top: 30px; /* add distance to header */
-  padding-left: 10%; /* control overall indent */
+  padding-left: 1rem; /* control overall indent */
 }

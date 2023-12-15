@@ -3,3 +3,16 @@
   background-color: rgb(20,20,20);
   color: rgb(200,200,200); /* little less contrast, but nicer for the eyes */
 }
+/* elements */
+ul {
+  padding-left: inherit+2px; /* add small indent */
+}
+li {
+  list-style:upper-roman; /* add some variety */
+  padding-left: 5px; /* control main indent */
+}
+/* classes */
+.pokemonList {
+  padding-top: 30px; /* add distance to header */
+  padding-left: 10%; /* control overall indent */
+}

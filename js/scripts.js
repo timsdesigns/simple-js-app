@@ -23,3 +23,11 @@ pokemonList[3] = {
  weight : 27 ,
  types: ['dark']
 }
+
+let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`;
+for (let i = 0; i < pokemonList.length; i++) {
+  let p = pokemonList[i];
+  pDocList += `<li>Name: ${p.name}, height: ${p.height}</li>\n`;
+}
+document.write(pDocList + `\n</ul>\n</div>`);
+

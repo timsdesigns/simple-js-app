@@ -1,4 +1,5 @@
+/* dark mode */
 * {
   background-color: rgb(20,20,20);
-  color: rgb(200,200,200);
+  color: rgb(200,200,200); /* little less contrast, but nicer for the eyes */
 }

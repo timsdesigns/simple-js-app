@@ -1,3 +1,4 @@
+// Creating list of custom objects
 let pokemonList = [];
 pokemonList[0] = {
  name: "Bulbasaur",
@@ -24,10 +25,13 @@ pokemonList[3] = {
  types: ['dark']
 }
 
+// Adding object-list to page and highlight outlier:
 let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`;
 for (let i = 0; i < pokemonList.length; i++) {
   let p = pokemonList[i];
-  pDocList += `<li>Name: ${p.name}, height: ${p.height}</li>\n`;
+  pDocList += p.height >= 1.0 ?
+  `<li><strong>Name: ${p.name}, height: ${p.height} - Wow, that's big</strong></li>\n` : // Highlighting a special object from list
+  `<li>Name: ${p.name}, height: ${p.height}</li>\n`;
 }
 document.write(pDocList + `\n</ul>\n</div>`);
 

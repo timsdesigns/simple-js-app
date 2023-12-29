@@ -26,12 +26,13 @@ pokemonList[3] = {
 }
 
 // Adding object-list to page and highlight outlier:
-let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`;
-for (let i = 0; i < pokemonList.length; i++) {
-  let p = pokemonList[i];
+let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`; // Title
+pokemonList.forEach(pokemon => {
+  let p = pokemon;
   pDocList += p.height >= 1.0 ?
   `<li><strong>Name: ${p.name}, height: ${p.height} - Wow, that's big</strong></li>\n` : // Highlighting special object
   `<li>Name: ${p.name}, height: ${p.height}</li>\n`;
-}
+});
+
 document.write(pDocList + `\n</ul>\n</div>`);
 

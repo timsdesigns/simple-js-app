@@ -26,13 +26,15 @@ let pokemonRepository = (function(){
   }
   function getAll(){ return pokemonList; } 
   // function add(pokemon){ pokemonList.push(pokemon); }
-  let add = pokemon => pokemonList.push(pokemon);
+  let add = pokemon => typeof(pokemon) === 'object'?
+    pokemonList.push(pokemon): reportError('Wrong data type added, try using an object.');
   return {
     getAll: getAll,
     add: add
   }
 })();
-// pokemonRepository.add(pokemonRepository.getAll()[3]); // Test adding
+// pokemonRepository.add(pokemonRepository.getAll()[3]); // Test adding (should work)
+// pokemonRepository.add('beer'); // Test adding string (shouldn't work, but print error)
 // Preparing object-list for page and highlight outlier:
 let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`; // Title
 pokemonRepository.getAll().forEach(pokemon => {
@@ -43,4 +45,3 @@ pokemonRepository.getAll().forEach(pokemon => {
 });
 // Adding content:
 document.write(pDocList + `\n</ul>\n</div>`);
-

@@ -30,15 +30,17 @@ let pokemonRepository = (function(){
   let find = pokemon =>
     pokemonList.filter((p) => p.name.toLowerCase().includes(pokemon.toLowerCase()));
   // 1.6 Adding buttons as list items to page per pokemon:
+  let showDetails = (p) => console.log(p); //print element in console
+  let buttonClickHandler = (button, p) => button.addEventListener('click', ()=>showDetails(p));
   let addListItem = pokemon => {
     let pokList = document.querySelector(".pokemon-list");
-    let listItem = document.createElement("li");
+    let listItem = document.createElement("li"); //adding to DOM
     let button = document.createElement("button");
     button.innerText = pokemon.name;
     button.classList.add("list-button");
     listItem.appendChild(button);
     pokList.appendChild(listItem);    
-    button.addEventListener('click', event => { console.log(event.target.innerText); });
+    buttonClickHandler(button, pokemon);
   }
   return {
     getAll: getAll,

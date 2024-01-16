@@ -37,7 +37,8 @@ let pokemonRepository = (function(){
     button.innerText = pokemon.name;
     button.classList.add("list-button");
     listItem.appendChild(button);
-    pokList.appendChild(listItem);
+    pokList.appendChild(listItem);    
+    button.addEventListener('click', event => { console.log(event.target.innerText); });
   }
   return {
     getAll: getAll,

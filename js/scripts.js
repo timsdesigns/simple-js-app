@@ -24,16 +24,26 @@ let pokemonRepository = (function(){
     weight : 27 ,
     types: ['dark']
   }
-  function getAll(){ return pokemonList; } 
+  let getAll = () => pokemonList;
   let add = pokemon => typeof(pokemon) === 'object'?
     pokemonList.push(pokemon): reportError('Wrong data type added, try using an object.');
-  function find(pokemon) {
-    return pokemonList.filter((p) => p.name.toLowerCase().includes(pokemon.toLowerCase()));
+  let find = pokemon =>
+    pokemonList.filter((p) => p.name.toLowerCase().includes(pokemon.toLowerCase()));
+  // 1.6 Adding buttons as list items to page per pokemon:
+  let addListItem = pokemon => {
+    let pokList = document.querySelector(".pokemon-list");
+    let listItem = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerText = pokemon.name;
+    button.classList.add("list-button");
+    listItem.appendChild(button);
+    pokList.appendChild(listItem);
   }
   return {
     getAll: getAll,
     add: add,
-    find: find
+    find: find,
+    addListItem: addListItem
   }
 })();
 
@@ -44,12 +54,15 @@ let pokemonRepository = (function(){
 
 // Content to page
 // Preparing object-list for page and highlight outlier:
-let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`; // Title
-pokemonRepository.getAll().forEach(pokemon => {
-  let p = pokemon;
-  pDocList += p.height >= 1.0 ?
-  `<li><strong>Name: ${p.name}, height: ${p.height} - Wow, that's big</strong></li>\n` : // Highlighting special object
-  `<li>Name: ${p.name}, height: ${p.height}</li>\n`;
-});
+// 1.5:
+// let pDocList = `<div class="pokemonList">\n<h1>Pokemon List</h1>\n<ul>`; // Title
+// pokemonRepository.getAll().forEach(pokemon => {
+//   let p = pokemon;
+//   pDocList += p.height >= 1.0 ?
+//   `<li><strong>Name: ${p.name}, height: ${p.height} - Wow, that's big</strong></li>\n` : // Highlighting special object
+//   `<li>Name: ${p.name}, height: ${p.height}</li>\n`;
+// });
 // Adding content:
-document.write(pDocList + `\n</ul>\n</div>`);
+// document.write(pDocList + `\n</ul>\n</div>`);
+// 1.6 call repo functions to add to page:
+pokemonRepository.getAll().forEach(pokemon => pokemonRepository.addListItem(pokemon));

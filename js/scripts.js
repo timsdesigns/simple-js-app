@@ -25,9 +25,11 @@ let pokemonRepository = (function(){
     weight : 27 ,
     types: ['dark']
   }*/
-  let getAll = () => pokemonList;
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  
   let add = pokemon => typeof(pokemon) === 'object'?
     pokemonList.push(pokemon): reportError('Wrong data type added, try using an object.');
+  let getAll = () => pokemonList;
   let find = pokemon =>
     pokemonList.filter((p) => p.name.toLowerCase().includes(pokemon.toLowerCase()));
   // 1.6 Adding buttons as list items to page per pokemon:
@@ -48,6 +50,26 @@ let pokemonRepository = (function(){
   }
   //TODO 1.7.3:
   // - Add functions LoadList() and loadDetails() to load data from an external source
+  //   - LoadList: GET shorthand via fetch promise, then parse to object as promise via .json(),
+  //     then access collection ('results' key as defined per payload),
+  //     and add each object via add() using properties as in payload
+  let LoadList = ()=> 
+  fetch(apiUrl).then(res => res.json())
+  .then(o => o.results.forEach(p => 
+    add({ name: p.name, detailsUrl: p.url })
+    // ;console.log({ name: p.name, detailsUrl: p.url });} // Functional testing
+    )).catch(e =>console.error(e));
+    //   - loadDetails: request details on p object, then parse to details object, 
+    //     then add chosen details properties back to p object (map instead forEach)
+  let loadDetails = p =>
+    fetch(p.detailsUrl).then(res => res.json())
+      .then(d =>{
+        p.imgUrl = d.sprites.front_default,
+        p.height = d.height,
+        p.weight = d.weight,
+        p.moves = d.moves.map(m => m.move.name).join(", "),
+        p.types = d.types.map(t => t.type.name).join(", ")
+      }).catch(e => console.error(e));
   // - Assign both functions to keys with the same name in the returned object
   //TODO 1.7.B: Display message while data is being loaded
   // - Implement showLoadingMessage() and hideLoadingMessage() to append/remove a message to the page
@@ -55,10 +77,12 @@ let pokemonRepository = (function(){
   //   - In their fetch() code's then() and catch() blocks; hideLoadingMessage() should be executed
   //     to hide the loading message after receiving the response from the fetch code 
   return {
-    getAll: getAll,
     add: add,
+    LoadList: LoadList,
+    getAll: getAll,
     find: find,
-    addListItem: addListItem
+    addListItem: addListItem,
+    loadDetails: loadDetails
   }
 })();
 
@@ -80,7 +104,7 @@ let pokemonRepository = (function(){
 // });
 // Adding content:
 // document.write(pDocList + `\n</ul>\n</div>`);
-
+// pokemonRepository.LoadList(); //Functional testing 1.7.3
 pokemonRepository.getAll().forEach(pokemon => pokemonRepository.addListItem(pokemon)); // 1.6 call repo functions to add to page
 //TODO 1.7.7: Check functionality:
 // - Page should a list displaying all Pokémon

@@ -1,7 +1,7 @@
 let pokemonRepository = (function(){
   let pokemonList = []; // Creating list of custom objects
   //TODO 1.7.2: Remove the array of Pokémon objects and replace it with an empty array
-  pokemonList[0] = {
+  /*pokemonList[0] = {
     name: "Bulbasaur",
     height : 0.7 ,
     weight : 6.9 ,
@@ -24,7 +24,7 @@ let pokemonRepository = (function(){
     height : 1 ,
     weight : 27 ,
     types: ['dark']
-  }
+  }*/
   let getAll = () => pokemonList;
   let add = pokemon => typeof(pokemon) === 'object'?
     pokemonList.push(pokemon): reportError('Wrong data type added, try using an object.');

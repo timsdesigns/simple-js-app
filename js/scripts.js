@@ -1,6 +1,7 @@
 let pokemonRepository = (function(){
   let pokemonList = []; // Creating list of custom objects
-    pokemonList[0] = {
+  //TODO 1.7.2: Remove the array of Pokémon objects and replace it with an empty array
+  pokemonList[0] = {
     name: "Bulbasaur",
     height : 0.7 ,
     weight : 6.9 ,
@@ -30,6 +31,9 @@ let pokemonRepository = (function(){
   let find = pokemon =>
     pokemonList.filter((p) => p.name.toLowerCase().includes(pokemon.toLowerCase()));
   // 1.6 Adding buttons as list items to page per pokemon:
+  //TODO 1.7.6: Edit showDetails() to load from API instead of static data
+  // - call loadDetails(), pass Pokémon object as parameter
+  // - Log result to console for now; display in interface later
   let showDetails = (p) => console.log(p); //print element in console
   let buttonClickHandler = (button, p) => button.addEventListener('click', ()=>showDetails(p));
   let addListItem = pokemon => {
@@ -42,6 +46,14 @@ let pokemonRepository = (function(){
     pokList.appendChild(listItem);    
     buttonClickHandler(button, pokemon);
   }
+  //TODO 1.7.3:
+  // - Add functions LoadList() and loadDetails() to load data from an external source
+  // - Assign both functions to keys with the same name in the returned object
+  //TODO 1.7.B: Display message while data is being loaded
+  // - Implement showLoadingMessage() and hideLoadingMessage() to append/remove a message to the page
+  // - In LoadList() and loadDetails(); showLoadingMessage() should be the first executed call
+  //   - In their fetch() code's then() and catch() blocks; hideLoadingMessage() should be executed
+  //     to hide the loading message after receiving the response from the fetch code 
   return {
     getAll: getAll,
     add: add,
@@ -50,6 +62,7 @@ let pokemonRepository = (function(){
   }
 })();
 
+//TODO 1.7.4: Load list from server before rendering it here
 // Functional tests:
 // pokemonRepository.add(pokemonRepository.getAll()[3]); // Test adding (should work)
 // pokemonRepository.add('beer'); // Test adding string (shouldn't work, but print error)
@@ -67,5 +80,8 @@ let pokemonRepository = (function(){
 // });
 // Adding content:
 // document.write(pDocList + `\n</ul>\n</div>`);
-// 1.6 call repo functions to add to page:
-pokemonRepository.getAll().forEach(pokemon => pokemonRepository.addListItem(pokemon));
+
+pokemonRepository.getAll().forEach(pokemon => pokemonRepository.addListItem(pokemon)); // 1.6 call repo functions to add to page
+//TODO 1.7.7: Check functionality:
+// - Page should a list displaying all Pokémon
+// - Once one is clicked, after short moment to load, console should show the returned Pokémon object.

@@ -8,7 +8,8 @@ ul {
   padding-left: 2rem; /* add small indent */
 }
 li {
-  list-style:upper-roman; /* add some variety */
+  /*list-style:upper-roman; /* add some variety */
+  list-style:decimal-leading-zero; /* add some variety */
   padding-left: 5px; /* control main indent */
 }
 /* classes */
@@ -36,4 +37,14 @@ li {
 }
 .list-button:hover {
   box-shadow: 0 0 2px 2px #999;
+}
+#loading-message {
+  padding-left: 20px;
+  background: none;
+}
+#loading-message_unspecific {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

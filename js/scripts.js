@@ -33,7 +33,7 @@ let pokemonRepository = (function(){
   let find = pokemon =>
     pokemonList.filter((p) => p.name.toLowerCase().includes(pokemon.toLowerCase()));
   // 1.6 Adding buttons as list items to page per pokemon:
-  let buttonClickHandler = (button, p) => button.addEventListener('click', ()=>showDetails(p));
+  let buttonClickHandler = (button, p) => button.addEventListener('click', ()=> showDetails(p));
   let addListItem = pokemon => {
     let pokList = document.querySelector(".pokemon-list");
     let listItem = document.createElement("li"); //adding to DOM
@@ -44,39 +44,64 @@ let pokemonRepository = (function(){
     pokList.appendChild(listItem);    
     buttonClickHandler(button, pokemon);
   }
+
   // 1.7.3: Adding functions LoadList() and loadDetails() to load data from an external source
   //   - LoadList: GET shorthand via fetch promise, then parse to object as promise via .json(),
   //     then access collection ('results' key as defined per payload),
   //     and add each object via add() using properties as in payload
-  let LoadList = ()=> 
-    fetch(apiUrl).then(res => res.json())
+  let LoadList = ()=> {
+    showLoadingMessage();
+    return fetch(apiUrl).then(res => res.json())
     .then(o => o.results.forEach(p => 
       add({ name: p.name, detailsUrl: p.url })
       // ;console.log({ name: p.name, detailsUrl: p.url });} // Functional testing
-      )).catch(e =>console.error(e));
-    
+      )).catch(e =>console.error(e))
+    .finally(() => hideLoadingMessage());
+  }
+
   //   - loadDetails: request details on p object, then parse to details object, 
   //     then add chosen details properties back to p object (map instead forEach)
-  let loadDetails = p =>
-    fetch(p.detailsUrl).then(res => res.json())
+  let loadDetails = p => {
+    showLoadingMessage(p);
+    return fetch(p.detailsUrl).then(res => res.json())
     .then(d =>{
       p.imgUrl = d.sprites.front_default,
       p.height = d.height,
       p.weight = d.weight,
       p.moves = d.moves.map(m => m.move.name).join(", "),
       p.types = d.types.map(t => t.type.name).join(", ")
-    }).catch(e => console.error(e));
-    // -[x] Assign both functions to keys with the same name in the returned object
+    }).catch(e => console.error(e))
+    .finally(() => hideLoadingMessage());
+  }  
+  // -[x] Assign both functions to keys with the same name in the returned object
     
   // 1.7.6: Editing showDetails() to load from API instead of static data
   // - call loadDetails(), pass Pokémon object as parameter
   // - Log result to console for now; display in interface later
   let showDetails = p => loadDetails(p).then(()=> console.log(p));
-  //TODO 1.7.B: Display message while data is being loaded
+
+  // 1.7.B: Displaying message while data is being loaded
   // - Implement showLoadingMessage() and hideLoadingMessage() to append/remove a message to the page
   // - In LoadList() and loadDetails(); showLoadingMessage() should be the first executed call
   //   - In their fetch() code's then() and catch() blocks; hideLoadingMessage() should be executed
   //     to hide the loading message after receiving the response from the fetch code 
+  let showLoadingMessage = (p = null) => {
+    let btn = p ? Array.from(document.querySelectorAll('button'))
+      .find(b => b.innerText === p.name) : null;
+    const loadingElement = document.createElement('span');
+    loadingElement.innerText = 'Loading...';
+    loadingElement.id = 'loading-message';
+    if (btn) btn.parentNode.appendChild(loadingElement);
+    else{      
+      loadingElement.id = 'loading-message_unspecific';
+      document.createElement("p").appendChild(loadingElement);
+    }
+  }  
+  let hideLoadingMessage = ()=> {
+    const loadingElement = document.getElementById('loading-message');
+    if (loadingElement) loadingElement.remove();
+  }
+
   return {
     add: add,
     getAll: getAll,
@@ -105,7 +130,7 @@ let pokemonRepository = (function(){
 // Adding content:
 // document.write(pDocList + `\n</ul>\n</div>`);
 // pokemonRepository.LoadList(); //Functional testing 1.7.3
-pokemonRepository.LoadList();
+
 // 1.7.4: Load list from server as promise, before then calling the render of it here (insert)
 pokemonRepository.LoadList().then(()=>
   pokemonRepository.getAll()
@@ -114,3 +139,4 @@ pokemonRepository.LoadList().then(()=>
 // 1.7.7: Checking functionality:
 // -[x] Page should a list displaying all Pokémon
 // -[x] Once one is clicked, after short moment to load, console should show the returned Pokémon object.
+

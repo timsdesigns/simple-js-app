@@ -63,19 +63,25 @@ li {
   /* center */
   display: grid;
   text-align: center;
-
-  position: absolute;
+  position: fixed;
   height: 100vh;
   width: 100%;
   top: 0;
   left: 0;
 }
-.details-title {
-  text-align: left;
+.modal {
+  height: fit-content;
 }
 .details-item {
   list-style-type: none;
-}
-.details-content {
+  overflow:hidden;
+  padding:10px;
+ } 
+ .details-title {  
+  float: left;
+} 
+ .details-content {
   text-align: left;
+  display: inline-block;
 }
+ 

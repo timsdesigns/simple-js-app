@@ -29,7 +29,6 @@ let pokemonRepository = (() => {
     return fetch(apiUrl).then(res => res.json())
       .then(o => o.results.forEach(p =>
         add({ name: p.name, detailsUrl: p.url })
-        // ;console.log({ name: p.name, detailsUrl: p.url });} // Functional testing
       )).catch(e => console.error(e))
       .finally(() => hideLoadingMessage());
   }
@@ -99,6 +98,25 @@ let pokemonRepository = (() => {
           image.src = p[k];
           image.alt = "image";
           li.appendChild(image);
+        }else if (k === "moves"){
+          let div = document.createElement("div");
+          title.classList.add("details-title");
+          title.innerText = "moves";
+          let paragraph = document.createElement("p");
+          let truncatedText = p[k].split(',').slice(0, 10).join(', ') + '...';
+          paragraph.innerText = truncatedText;
+          div.appendChild(title);
+          div.appendChild(paragraph);
+          let button = document.createElement("a");
+          button.innerText = "Show all";
+          button.href = "#";
+          button.addEventListener('click', e =>{
+            e.preventDefault();
+            paragraph.innerText = p[k];
+            button.style.display = 'none';
+          });
+          div.appendChild(button);
+          li.appendChild(div);
         }else{
           let paragraph = document.createElement("p");
           paragraph.innerText = p[k];

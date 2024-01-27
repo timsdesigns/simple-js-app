@@ -83,8 +83,8 @@ let pokemonRepository = (() => {
   // Load from API instead of static data
   // - call loadDetails(), pass Pokémon object as parameter
   // - display in modal interface
-  let showDetails = p =>{
-    loadDetails(p).then(()=>{
+  let showDetails = p => {
+    loadDetails(p).then(() => {
       let extraHTML = document.createElement("ul");
 
       Object.keys(p).forEach(k => {
@@ -92,16 +92,17 @@ let pokemonRepository = (() => {
         li.classList.add("details-item");
         let title = document.createElement("h3");
         title.classList.add("details-title");
-        title.innerText = k;
-        if (k === "imgUrl"){
+        title.innerText = k.includes("detailsUrl") ? "source" : k;
+        if (k === "name") {
+          return;
+        }else if (k === "imgUrl") {
+          title.innerText = "";
           let image = document.createElement("img");
           image.src = p[k];
           image.alt = "image";
           li.appendChild(image);
-        }else if (k === "moves"){
+        } else if (k === "moves") {
           let div = document.createElement("div");
-          title.classList.add("details-title");
-          title.innerText = "moves";
           let paragraph = document.createElement("p");
           let truncatedText = p[k].split(',').slice(0, 10).join(', ') + '...';
           paragraph.innerText = truncatedText;
@@ -110,14 +111,14 @@ let pokemonRepository = (() => {
           let button = document.createElement("a");
           button.innerText = "Show all";
           button.href = "#";
-          button.addEventListener('click', e =>{
+          button.addEventListener('click', e => {
             e.preventDefault();
             paragraph.innerText = p[k];
             button.style.display = 'none';
           });
           div.appendChild(button);
           li.appendChild(div);
-        }else{
+        } else {
           let paragraph = document.createElement("p");
           paragraph.innerText = p[k];
           paragraph.classList.add("details-content");

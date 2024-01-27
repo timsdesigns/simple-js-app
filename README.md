@@ -22,17 +22,17 @@ data from an external API and enables the viewing of data points in detail.
 ## Technical Requirements
 ### Required
  The App *must*:
- - [ ] load data from an `external API`; for instance: [Pokémon API](https://pokeapi.co/)
- - [ ] display `item list` after page load (from API)
- - [ ] enable more detail `list item view` (e.g., Pokémon) on demand, when clicking
- - [ ] have `CSS styling`
+ - [x] load data from an `external API`; for instance: [Pokémon API](https://pokeapi.co/)
+ - [x] display `item list` after page load (from API)
+ - [x] enable more detail `list item view` (e.g., Pokémon) on demand, when clicking
+ - [x] have `CSS styling`
  - [ ] have JavaScript code formatted according to `ESLint` rules
    - [ ] *may* be formatted via `Prettier`
    - [ ] *may* be manually formatted
- - [ ] use 1+ additional `complex UI patterns` for _details_ or _touch interactions_, i.e. a `modal`.
+ - [x] use 1+ additional `complex UI patterns` for _details_ or _touch interactions_, i.e. a `modal`.
    - [ ] *may* allow `item search` (e.g., search Pokémon)
  - [ ] throw `no errors`
- - [ ] **should** be `deployed` on GitHub Pages (or other `publicly` accessible platform)
+ - [x] **should** be `deployed` on GitHub Pages (or other `publicly` accessible platform)
  - [ ] work in Chrome, Firefox, Safari, Edge, and `Internet Explorer 11`
 
 ### Nice to Have
@@ -45,16 +45,16 @@ data from an external API and enables the viewing of data points in detail.
    - depending on the type of data being displayed
 
 ## Work steps
- 1. - [ ] Set up the general `outline`
- 2. - [ ] Set up a general `dataset` and `display` in very basic way to user
- 3. - [ ] `Print details` on each item
- 4. - [ ] Wrap repo in `IIFE` to avoid accidentally accessing global state
- 5. - [ ] `Update` implementation to work within the IIFE
- 6. - [ ] `Render static` data from data repo on page
- 7. - [ ] Add basic `styling` to app
- 8. - [ ] Ensure app `accessability`
- 9. - [ ] Fetch data from API via `Ajax` with `asynchronous` behavior
- 10. - [ ] Add 1+ `complex UI patterns` to app (show data details in a `modal`)
+ 1. - [x] Set up the general `outline`
+ 2. - [x] Set up a general `dataset` and `display` in very basic way to user
+ 3. - [x] `Print details` on each item
+ 4. - [x] Wrap repo in `IIFE` to avoid accidentally accessing global state
+ 5. - [x] `Update` implementation to work within the IIFE
+ 6. - [x] `Render static` data from data repo on page
+ 7. - [x] Add basic `styling` to app
+ 8. - [x] Ensure app `accessability`
+ 9. - [x] Fetch data from API via `Ajax` with `asynchronous` behavior
+ 10. - [x] Add 1+ `complex UI patterns` to app (show data details in a `modal`)
  11. - [ ] Create clean and usable app and `UI` design via `Bootstrap`
  12. - [ ] Ensure app works in `all` necessary `browsers`
  13. - [ ] Add `ESLint rules`, ensure code passes `validation`

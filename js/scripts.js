@@ -16,12 +16,21 @@ let pokemonRepository = (() => {
     let button = document.createElement("button");
     button.innerText = pokemon.name;
     button.classList.add("list-button");
+    button.classList.add("btn");  // Adding Bootstrap
+    button.classList.add("list-group-item");  // Adding Bootstrap
     listItem.appendChild(button);
     pokList.appendChild(listItem);
-    buttonClickHandler(button, pokemon);
+    // Bootstrap version
+    //buttonClickHandler(button, pokemon);
+    button.classList.add("btn-primary");
+    button.setAttribute("data-bs-toggle", "modal");
+    button.setAttribute("data-bs-target", "#exampleModal");
+    buttonClickHandlerBs(button, pokemon);
+
   }
   // Function to handle click events on the list buttons
   let buttonClickHandler = (button, p) => button.addEventListener('click', () => showDetails(p));
+  let buttonClickHandlerBs = (button, p) => button.addEventListener('click', () => showDetailsBs(p));
 
   // Load data from an external source:
   // GET shorthand via fetch promise, then parse to object as promise via .json(),
@@ -43,10 +52,10 @@ let pokemonRepository = (() => {
     return fetch(p.detailsUrl).then(res => res.json())
       .then(d => {
         p.imgUrl = d.sprites.front_default,
-        p.height = d.height,
-        p.weight = d.weight,
-        p.moves = d.moves.map(m => m.move.name).join(", "),
-        p.types = d.types.map(t => t.type.name).join(", ")
+          p.height = d.height,
+          p.weight = d.weight,
+          p.moves = d.moves.map(m => m.move.name).join(", "),
+          p.types = d.types.map(t => t.type.name).join(", ")
       }).catch(e => console.error(e))
       .finally(() => hideLoadingMessage());
   }
@@ -61,22 +70,22 @@ let pokemonRepository = (() => {
     modalTitle.innerText = title;
     let modalText = document.createElement("p");
     modalText.innerText = text;
-    let modalElements = [closeButtonElement, modalTitle, modalText];
+    let modalElements = [closeButtonElement, modalTitle, modalText]; // button, h1, p
     // Add details as extra elements
     if (extra) {
-      let modalExtra = document.createElement("div");
+      let modalExtra = document.createElement("div"); // div with 
       modalExtra.appendChild(extra);
       modalElements.push(modalExtra);
     }
 
-    // Add elements to modal box (on to of its container)
+    // Add elements to modal box (on top of its container)
     let modal = document.createElement("div");
     modalElements.forEach(element => modal.appendChild(element));
     modal.classList.add("modal");
 
     // Add modal to modal-container (clickable around modal box)
     let modalContainer = document.querySelector("#modal-container");
-    modalContainer.innerHTML = ""; //Clear existing modals
+    //modalContainer.innerHTML = ""; //Clear existing modals
     modalContainer.appendChild(modal); //Add new modal box
     modalContainer.classList.add("is-visible"); //Show
 
@@ -85,6 +94,101 @@ let pokemonRepository = (() => {
     modalContainer.addEventListener("click", e => { if (e.target === modalContainer) hideModal() }) //Hide when clicked
     window.addEventListener("keydown", e => { if (e.key === "Escape") hideModal() }); //Hide when Esc
   }
+
+  // Functions to show the Bootstrap version
+  let showModalBS = (title, text, extra = null) => {
+    // Top row in modal box
+    let modalHeaderBs = document.querySelector(".modal-header");
+    let modalTitleBs = document.querySelector(".modal-title");
+    // Image & list with detail names and details
+    let modalBodyBs = document.querySelector(".modal-body");
+
+    modalTitleBs.innerHTML = "";
+    modalBodyBs.innerHTML = "";
+
+    // Create modal elements (in header)
+    let modalTitle = document.createElement("h1");
+    modalTitle.innerText = title;
+    modalTitleBs.appendChild(modalTitle);
+
+    // Create modal elements (in box)
+    let modalText = document.createElement("p");
+    modalText.innerText = text;
+
+    let modalElements = [modalText]; // [p]
+    // Add details as extra elements
+    if (extra) {
+      let modalExtra = document.createElement("div"); // div with details
+      modalExtra.appendChild(extra);
+      modalElements.push(modalExtra); // [p, ]
+    }
+    // Add elements to modal-body (on top of its container)
+    modalElements.forEach(element => modalBodyBs.appendChild(element));
+  }
+  let showDetailsBs = p => {
+    loadDetails(p).then(() => {
+      let extraHTML = document.createElement("ul");
+      Object.keys(p).forEach(k => {
+        // Add details to unordered list
+        let li = document.createElement("li");
+        li.classList.add("details-item");
+        li.classList.add("list-group-item");
+        li.classList.add("d-flex");
+        li.classList.add("align-items-center");
+        let propTitle = document.createElement("h3");
+        propTitle.classList.add("details-title");
+        propTitle.innerText = k.includes("detailsUrl") ? "source" : k;
+        li.appendChild(propTitle);
+
+        if (k === "name") return; // already in title
+        else if (k === "imgUrl") {
+          propTitle.innerText = ""; // image speaks for itself
+          let image = document.createElement("img");
+          image.src = p[k];
+          image.alt = "image of pokemon";
+          li.appendChild(image);
+        } else if (k === "moves") {
+          let div = document.createElement("div");
+          ["d-flex", "justify-content-between", "align-items-center"].forEach(c => div.classList.add(c));
+          div.appendChild(propTitle);
+
+          let truncatedText = document.createElement("span");
+          ["badge", "bg-primary", "rounded-pill"].forEach(c => truncatedText.classList.add(c));
+          truncatedText.innerText = p[k].length;
+
+          let buttonWrap = document.createElement("a");
+          buttonWrap.appendChild(truncatedText);
+          buttonWrap.href = "#";
+          let toggleFullText = true;
+          buttonWrap.addEventListener('click', e => {
+            e.preventDefault();
+            if (toggleFullText) {
+              truncatedText.classList.add("d-block");
+              truncatedText.classList.remove("rounded-pill");
+              truncatedText.innerText = p[k];
+              toggleFullText = false;
+            } else {
+              truncatedText.innerText = p[k].length;
+              truncatedText.classList.add("rounded-pill");
+              toggleFullText = true;
+            }
+            //buttonWrap.style.display = 'none';
+          });
+
+          div.appendChild(buttonWrap);
+          li.appendChild(div);
+        } else {
+          let paragraph = document.createElement("p");
+          paragraph.innerText = p[k];
+          paragraph.classList.add("details-content");
+          li.appendChild(paragraph);
+        }
+        extraHTML.appendChild(li);
+      });
+      showModalBS(p.name, "Details:", extraHTML);
+    });
+  }
+
   // Function to show the details of a pokemon in the modal
   // - call loadDetails(), pass Pokémon object as parameter
   // - display in modal interface
@@ -98,6 +202,8 @@ let pokemonRepository = (() => {
         let title = document.createElement("h3");
         title.classList.add("details-title");
         title.innerText = k.includes("detailsUrl") ? "source" : k;
+        li.appendChild(title);
+
         if (k === "name") {
           return;
         } else if (k === "imgUrl") {
@@ -107,6 +213,7 @@ let pokemonRepository = (() => {
           image.alt = "image";
           li.appendChild(image);
         } else if (k === "moves") {
+          // replace preview if clicked
           let div = document.createElement("div");
           let paragraph = document.createElement("p");
           let truncatedText = p[k].split(',').slice(0, 10).join(', ') + '...';
@@ -129,7 +236,6 @@ let pokemonRepository = (() => {
           paragraph.classList.add("details-content");
           li.appendChild(paragraph);
         }
-        extraHTML.appendChild(title);
         extraHTML.appendChild(li);
       });
       showModal(p.name, "Details:", extraHTML); // Show the modal with the details
@@ -139,19 +245,26 @@ let pokemonRepository = (() => {
   //#region Carousel
   // Swipe detection
   let startX = 0;
-  let container = document.querySelector("#modal-container");
-  container.addEventListener("touchstart", e => startX = e.changedTouches[0].screenX);
-  container.addEventListener("touchend", e => updateCarousel(e.changedTouches[0].screenX - startX));
-  // Slide display
-  let updateCarousel = (change) => {
-    let currentPokemonName = document.querySelector("#modal-container > .modal > h1").innerText;
-    let currentIndex = findIndex(currentPokemonName); // Get index in pokemonList
-    let nextIndex = (currentIndex + 1) % getAll().length; // Calc next, wrap end
-    let prevIndex = (currentIndex - 1 + getAll().length) % getAll().length; // Calc previous in wrapped list
-    if (change > 50) loadDetails(getAll()[prevIndex])
-      .then(() => showDetails(getAll()[prevIndex])); // Get previous on swipe left if found/loading resolved
-    else if (change < -50) loadDetails(getAll()[nextIndex])
-      .then(() => showDetails(getAll()[nextIndex])); // Get next on swipe right
+  // let container = document.querySelector("#modal-container");
+  // let container = document.getElementById("#exampleModal"); // Bootstrap
+  let container = document.querySelector(".modal");
+  if (container != null) {
+    container.addEventListener("touchstart", e => startX = e.changedTouches[0].screenX);
+    container.addEventListener("touchend", e => updateCarousel(e.changedTouches[0].screenX - startX));
+    // Slide display
+    let updateCarousel = (change) => {
+      // let currentPokemonName = document.querySelector("#modal-container > .modal > h1").innerText;
+      let currentPokemonName = document.querySelector(".modal-title").innerText;
+      let currentIndex = findIndex(currentPokemonName); // Get index in pokemonList
+      let nextIndex = (currentIndex + 1) % getAll().length; // Calc next, wrap end
+      let prevIndex = (currentIndex - 1 + getAll().length) % getAll().length; // Calc previous in wrapped list
+      if (change > 50) loadDetails(getAll()[prevIndex])
+        // .then(() => showDetails(getAll()[prevIndex])); // Get previous on swipe left if found/loading resolved
+        .then(() => showDetailsBs(getAll()[prevIndex])); // Get previous on swipe left if found/loading resolved
+      else if (change < -50) loadDetails(getAll()[nextIndex])
+        // .then(() => showDetails(getAll()[nextIndex])); // Get next on swipe right
+        .then(() => showDetailsBs(getAll()[nextIndex])); // Get next on swipe right
+    }
   }
   //#endregion Carousel
 

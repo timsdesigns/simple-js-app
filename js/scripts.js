@@ -1,4 +1,5 @@
 (() => {
+  //#region Navbar dark mode
   let theme = localStorage.getItem('theme');
   if (theme === null || theme === undefined) {
     theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
@@ -13,6 +14,7 @@
     localStorage.setItem('theme', newTheme);
     console.log("localStorage.getItem('theme') set to:" + newTheme);
   });
+  //#endregion Navbar dark mode
 
   let pokemonRepository = (() => {
     let pokemonList = []; // Creating list for custom objects
@@ -28,7 +30,8 @@
     // Adding buttons as list items to page per pokemon
     let addListItem = pokemon => {
       let pokList = document.querySelector(".pokemon-list");
-      let listItem = document.createElement("li"); // Adding to DOM
+      let listItem = document.createElement("div"); // Adding to DOM
+      listItem.className = "col-sm";
       let button = document.createElement("button");
       button.innerText = pokemon.name;
       //button.classList.add("list-button");

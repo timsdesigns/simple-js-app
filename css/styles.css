@@ -1,6 +1,9 @@
 /* dark mode */
+:root {
+  --main-bg-color: rgb(20,20,20);
+}
 * {
-  background-color: rgb(20,20,20);
+  background-color: var(--main-bg-color);
   color: rgb(200,200,200); /* little less contrast, but nicer for the eyes */
 }
 /* elements */
@@ -48,6 +51,10 @@ li {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+/* Bootstrap */
+.modal-footer {
+  background-color: var(--main-bg-color);
 }
 /*
 #modal-container {

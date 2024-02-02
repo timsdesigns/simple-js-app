@@ -18,6 +18,7 @@ let pokemonRepository = (() => {
     button.classList.add("list-button");
     button.classList.add("btn");  // Adding Bootstrap
     button.classList.add("list-group-item", "badge", "bg-primary", "rounded-pill");  // Adding Bootstrap
+    button.classList.add("d-flex", "align-items-center", "py-2");  // Adding Bootstrap
     listItem.appendChild(button);
     pokList.appendChild(listItem);
     // Bootstrap version

@@ -55,7 +55,7 @@ data from an external API and enables the viewing of data points in detail.
  8. - [x] Ensure app `accessability`
  9. - [x] Fetch data from API via `Ajax` with `asynchronous` behavior
  10. - [x] Add 1+ `complex UI patterns` to app (show data details in a `modal`)
- 11. - [ ] Create clean and usable app and `UI` design via `Bootstrap`
+ 11. - [x] Create clean and usable app and `UI` design via `Bootstrap`
  12. - [ ] Ensure app works in `all` necessary `browsers`
  13. - [ ] Add `ESLint rules`, ensure code passes `validation`
  14. - [ ] Make final adjustments (`styling`, `usability` improvements)

@@ -146,19 +146,22 @@ let pokemonRepository = (() => {
           let image = document.createElement("img");
           image.src = p[k];
           image.alt = "image of pokemon";
+          image.classList.add("details-content", "text-center", "text-justify");
           li.appendChild(image);
         } else if (k === "moves") {
           let div = document.createElement("div");
-          ["d-flex", "justify-content-between", "align-items-center"].forEach(c => div.classList.add(c));
+          div.classList.add("d-flex", "justify-content-between", "align-items-center", "flex-grow-1");
           div.appendChild(propTitle);
 
-          let truncatedText = document.createElement("span");
-          ["badge", "bg-primary", "rounded-pill"].forEach(c => truncatedText.classList.add(c));
-          truncatedText.innerText = p[k].length;
-
           let buttonWrap = document.createElement("a");
-          buttonWrap.appendChild(truncatedText);
           buttonWrap.href = "#";
+          buttonWrap.classList.add("details-content", "text-center", "text-justify", "mx-auto"); // mx to center
+          
+          let truncatedText = document.createElement("span");
+          truncatedText.classList.add("badge", "bg-primary", "rounded-pill");
+          truncatedText.innerText = p[k].length;
+          buttonWrap.appendChild(truncatedText);
+
           let toggleFullText = true;
           buttonWrap.addEventListener('click', e => {
             e.preventDefault();
@@ -182,7 +185,7 @@ let pokemonRepository = (() => {
         } else {
           let paragraph = document.createElement("p");
           paragraph.innerText = p[k];
-          paragraph.classList.add("details-content");
+          paragraph.classList.add("details-content", "text-center", "text-justify", "flex-grow-1");
           li.appendChild(paragraph);
         }
         extraHTML.appendChild(li);

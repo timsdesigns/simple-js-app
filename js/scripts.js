@@ -17,7 +17,7 @@ let pokemonRepository = (() => {
     button.innerText = pokemon.name;
     button.classList.add("list-button");
     button.classList.add("btn");  // Adding Bootstrap
-    button.classList.add("list-group-item");  // Adding Bootstrap
+    button.classList.add("list-group-item", "badge", "bg-primary", "rounded-pill");  // Adding Bootstrap
     listItem.appendChild(button);
     pokList.appendChild(listItem);
     // Bootstrap version

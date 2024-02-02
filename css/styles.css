@@ -49,6 +49,7 @@ li {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+/*
 #modal-container {
   display: none;
 }
@@ -56,11 +57,11 @@ li {
   padding: 3%;
   box-sizing: border-box;
   background: rgba(0,0,0,0.5);
-  /* in front of others */
+  /* in front of others *//*
   z-index: 999;
-  /* allow scrolling */
+  /* allow scrolling *//*
   overflow: auto;
-  /* center */
+  /* center *//*
   display: grid;
   text-align: center;
   position: fixed;
@@ -68,7 +69,7 @@ li {
   width: 100%;
   top: 0;
   left: 0;
-}
+}*//*
 .modal {
   height: fit-content;
 }
@@ -84,4 +85,4 @@ li {
   text-align: left;
   display: inline-block;
 }
- 
+ */

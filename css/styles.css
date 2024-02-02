@@ -3,7 +3,7 @@
   --main-bg-color: rgb(20,20,20);
 }
 * {
-  background-color: var(--main-bg-color);
+  /* background-color: var(--main-bg-color); */
   color: rgb(200,200,200); /* little less contrast, but nicer for the eyes */
 }
 /* elements */

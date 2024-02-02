@@ -53,6 +53,9 @@ li {
   transform: translate(-50%, -50%);
 }
 /* Bootstrap */
+.custom-padding-top {
+  padding-top: 80px; /* Adjust the value as needed */
+}
 .btn-fixed-min-width {
   min-width: 120px !important;
   --bs-text-opacity: 0.9 !important;

@@ -165,10 +165,12 @@ let pokemonRepository = (() => {
             if (toggleFullText) {
               truncatedText.classList.add("d-block");
               truncatedText.classList.remove("rounded-pill");
+              truncatedText.classList.remove("badge");
               truncatedText.innerText = p[k];
               toggleFullText = false;
             } else {
               truncatedText.innerText = p[k].length;
+              truncatedText.classList.add("badge");
               truncatedText.classList.add("rounded-pill");
               toggleFullText = true;
             }

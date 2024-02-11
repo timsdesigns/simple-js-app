@@ -52,8 +52,8 @@
       listItem.appendChild(button);
       pokList.appendChild(listItem);
       button.classList.add("btn-primary");
-      button.setAttribute("data-bs-toggle", "modal");
-      button.setAttribute("data-bs-target", "#exampleModal");
+      button.setAttribute("data-bs-toggle", "modal"); // Trigger for BS Modal
+      button.setAttribute("data-bs-target", "#exampleModal"); // Trigger for BS Modal
       buttonClickHandlerBs(button, pokemon);
     }
     // Function to handle click events on the list buttons
@@ -212,12 +212,14 @@
       event.preventDefault();
       const searchQuery = searchForm.querySelector("input").value;
       let index = findIndex(searchQuery); // Get index in pokemonList
-      console.log(index);
-      if (index > -1) loadDetails(getAll()[index])
-        .then(() => showDetailsBs(getAll()[index]));
-      if (index > -1) loadDetails(getAll()[index])
-        .then(() => console.log(getAll()[index]));
-      searchForm.reset();
+      if (index === -1) return;
+      loadDetails(getAll()[index]).then(() => {
+        showDetailsBs(getAll()[index])
+        // Instancing new BS Modal (since no button triggered it)
+        const modalInstance = new bootstrap.Modal(document.querySelector('#exampleModal'));
+        modalInstance.show();
+        searchForm.reset();
+      });
     });
     //#endregion Navabar Search Form
 

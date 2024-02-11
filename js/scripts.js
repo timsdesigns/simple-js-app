@@ -16,6 +16,7 @@
   });
   //#endregion Navbar dark mode
 
+
   let pokemonRepository = (() => {
     let pokemonList = []; // Creating list for custom objects
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150'; // To fetch name and detailsURL 
@@ -124,10 +125,7 @@
         Object.keys(p).forEach(k => {
           // Add details to unordered list
           let li = document.createElement("li");
-          li.classList.add("details-item");
-          li.classList.add("list-group-item");
-          li.classList.add("d-flex");
-          li.classList.add("align-items-center");
+          li.classList.add("details-item", "list-group-item", "d-flex", "align-items-center");
           let propTitle = document.createElement("h3");
           propTitle.classList.add("details-title");
           propTitle.innerText = k.includes("detailsUrl") ? "source" : k;
@@ -190,28 +188,24 @@
     //#region Carousel
     // Swipe detection
     let startX = 0;
-    // let container = document.querySelector("#modal-container");
-    // let container = document.getElementById("#exampleModal"); // Bootstrap
     let container = document.querySelector(".modal");
     if (container != null) {
       container.addEventListener("touchstart", e => startX = e.changedTouches[0].screenX);
       container.addEventListener("touchend", e => updateCarousel(e.changedTouches[0].screenX - startX));
       // Slide display
       let updateCarousel = (change) => {
-        // let currentPokemonName = document.querySelector("#modal-container > .modal > h1").innerText;
         let currentPokemonName = document.querySelector(".modal-title").innerText;
         let currentIndex = findIndex(currentPokemonName); // Get index in pokemonList
         let nextIndex = (currentIndex + 1) % getAll().length; // Calc next, wrap end
         let prevIndex = (currentIndex - 1 + getAll().length) % getAll().length; // Calc previous in wrapped list
         if (change > 50) loadDetails(getAll()[prevIndex])
-          // .then(() => showDetails(getAll()[prevIndex])); // Get previous on swipe left if found/loading resolved
           .then(() => showDetailsBs(getAll()[prevIndex])); // Get previous on swipe left if found/loading resolved
         else if (change < -50) loadDetails(getAll()[nextIndex])
-          // .then(() => showDetails(getAll()[nextIndex])); // Get next on swipe right
           .then(() => showDetailsBs(getAll()[nextIndex])); // Get next on swipe right
       }
     }
     //#endregion Carousel
+
 
     //#region Loading message
     // Displaying message while data is being loaded

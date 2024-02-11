@@ -34,9 +34,17 @@
     let addListItem = pokemon => {
       let pokList = document.querySelector(".pokemon-list");
       let listItem = document.createElement("div"); // Adding to DOM
-      listItem.className = "col-sm";
+      /* 
+          12/12 => 100% column-screen-width on custom extra small devices (<319px)
+          6/12  => 1/2 on extra small     (<576px)
+          4/12  => 1/3 on small devices   (≥576px)
+          3/12  => 1/4 on medium devices  (≥768px)
+          2/12  => 1/6 on large devices   (≥992px)
+      */
+      listItem.className = "col-custom col-6 col-sm-4 col-md-3 col-lg-2";
       let button = document.createElement("button");
       button.innerText = pokemon.name;
+      /* bootstrap-btn, blue, pill-shape, white-text, top+button-margin, font-weight, left+right-padding, constant-width+transparency */
       button.classList.add(
         "btn", "btn-primary", "rounded-pill", "text-white", "my-2", "fw-bold",
         "px-3", "btn-fixed-min-width");

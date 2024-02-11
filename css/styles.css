@@ -25,15 +25,21 @@
 }
 /* Bootstrap */
 .custom-padding-top {
-  padding-top: 80px; /* Adjust the value as needed */
+  padding-top: 80px; /* Where the columns begin below header */
 }
 .btn-fixed-min-width {
   min-width: 120px !important;
-  --bs-text-opacity: 0.9 !important;
+  --bs-text-opacity: 0.9 !important; /* dimming */
 }
 .btn-primary {
-  opacity: 0.8 !important;
+  opacity: 0.8 !important; /* dimming */
 }
 .modal-footer {
   background-color: var(--main-bg-color);
+}
+@media (max-width: 319px) {
+  .col-custom {
+      flex: 0 0 100% !important;
+      max-width: 100% !important;
+  }
 }

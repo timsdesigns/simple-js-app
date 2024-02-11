@@ -206,6 +206,20 @@
     }
     //#endregion Carousel
 
+    //#region Navabar Search Form
+    const searchForm = document.querySelector(`form[role="search"]`);
+    searchForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const searchQuery = searchForm.querySelector("input").value;
+      let index = findIndex(searchQuery); // Get index in pokemonList
+      console.log(index);
+      if (index > -1) loadDetails(getAll()[index])
+        .then(() => showDetailsBs(getAll()[index]));
+      if (index > -1) loadDetails(getAll()[index])
+        .then(() => console.log(getAll()[index]));
+      searchForm.reset();
+    });
+    //#endregion Navabar Search Form
 
     //#region Loading message
     // Displaying message while data is being loaded

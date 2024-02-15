@@ -26,19 +26,20 @@ data from an external API and enables the viewing of data points in detail.
  - [x] display `item list` after page load (from API)
  - [x] enable more detail `list item view` (e.g., Pokémon) on demand, when clicking
  - [x] have `CSS styling`
- - [ ] have JavaScript code formatted according to `ESLint` rules
-   - [ ] *may* be formatted via `Prettier`
-   - [ ] *may* be manually formatted
+ - [x] have JavaScript code formatted according to `ESLint` rules
+   - [x] *may* be formatted via `Prettier`
+   - [x] *may* be manually formatted
  - [x] use 1+ additional `complex UI patterns` for _details_ or _touch interactions_, i.e. a `modal`.
-   - [ ] *may* allow `item search` (e.g., search Pokémon)
- - [ ] throw `no errors`
+   - [x] *may* allow `item search` (e.g., search Pokémon)
+ - [x] throw `no errors`
  - [x] **should** be `deployed` on GitHub Pages (or other `publicly` accessible platform)
- - [ ] work in Chrome, Firefox, Safari, Edge, and `Internet Explorer 11`
+ - [x] work in Chrome, Firefox, Safari, Edge,
+   - [ ] not `Internet Explorer 11` due to [Bootstrap 5.3](https://github.com/twbs/bootstrap/blob/v5.3.2/.browserslistrc)
 
 ### Nice to Have
- - [ ] *should* show `loading indicators` while loading data
- - [ ] *should* `handle errors` (i.e. trying to load data while offline)
-   - [ ] show user-friendly `error messages`.
+ - [x] *should* show `loading indicators` while loading data
+ - [x] *should* `handle errors` (i.e. trying to load data while offline)
+   - [x] show user-friendly `error messages`.
 
 ## Mock-ups or Other Assets
  - mock-ups are provided primarily for reference purposes
@@ -56,9 +57,9 @@ data from an external API and enables the viewing of data points in detail.
  9. - [x] Fetch data from API via `Ajax` with `asynchronous` behavior
  10. - [x] Add 1+ `complex UI patterns` to app (show data details in a `modal`)
  11. - [x] Create clean and usable app and `UI` design via `Bootstrap`
- 12. - [ ] Ensure app works in `all` necessary `browsers`
- 13. - [ ] Add `ESLint rules`, ensure code passes `validation`
- 14. - [ ] Make final adjustments (`styling`, `usability` improvements)
- 15. - [ ] ++ Add `Touch` interactions (pointer events), e.g., `swiping` between items
- 16. - [ ] ++ Add `loading indicator`
- 17. - [ ] ++ Improve `aesthetics` or including `more features` (e.g, item search)
+ 12. - [x] Ensure app works in `all` necessary `browsers`
+ 13. - [x] Add `ESLint rules`, ensure code passes `validation`
+ 14. - [x] Make final adjustments (`styling`, `usability` improvements)
+ 15. - [x] ++ Add `Touch` interactions (pointer events), e.g., `swiping` between items
+ 16. - [x] ++ Add `loading indicator`
+ 17. - [x] ++ Improve `aesthetics` or including `more features` (e.g, item search)
